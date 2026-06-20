@@ -22,3 +22,13 @@
   from = "/api/webauthn"
   to = "/.netlify/functions/webauthn"
   status = 200
+
+[[redirects]]
+  from = "/api/push"
+  to = "/.netlify/functions/push"
+  status = 200
+
+[[redirects]]
+  from = "/api/vapid-public-key"
+  to = "/.netlify/functions/vapid-public-key"
+  status = 200

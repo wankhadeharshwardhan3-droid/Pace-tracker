@@ -5,6 +5,7 @@
   "type": "module",
   "dependencies": {
     "@netlify/blobs": "^10.7.0",
-    "@simplewebauthn/server": "^13.3.1"
+    "@simplewebauthn/server": "^13.3.1",
+    "web-push": "^3.6.7"
   }
 }

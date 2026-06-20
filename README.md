@@ -26,6 +26,14 @@ devices, browsers without biometric support, or if biometrics are removed),
 since there's no email/SMS recovery if a device-only credential were ever
 the *only* way in.
 
+Anyone can also turn on **daily reminders** ("Daily reminders" toggle on
+their dashboard). Once enabled, a notification arrives once a day if that
+person hasn't logged any hours yet — or a quick "nice work" if they have.
+This works even with the app closed, as long as it's been opened and
+enabled at least once. On iPhone, this only works if the app was added to
+the Home Screen first (Safari does not support push notifications for a
+site open only in a browser tab).
+
 ## Deploy (free, ~2 minutes)
 
 **Option A — drag and drop**
@@ -56,6 +64,34 @@ Anyone with this passcode can see everyone's hours, including hidden ones —
 treat it like a master key and only share it with people you trust with
 everyone's data.
 
+### Set up daily reminders (optional)
+
+Push notifications need a "VAPID" key pair — the app's ID badge that lets
+push services trust messages are really coming from your site. A pair has
+already been generated for you below. **Keep the private key secret.**
+
+In Netlify: *Site configuration → Environment variables → Add a variable*,
+add these three:
+
+| Key | Value |
+|---|---|
+| `VAPID_PUBLIC_KEY` | `BB0zNdP697k6kEbY4honDZY2z8QpOvt8JZMiCSfUlSnoBXciRDQlRSBnIVzyifXqqg_AGkGKI4C5AuCMvxdMKls` |
+| `VAPID_PRIVATE_KEY` | `LukIDr78E1eBPJqiX6bNdysSjhNUZHq8s-hLjT-57Jc` |
+| `VAPID_CONTACT_EMAIL` | `mailto:your-email@example.com` (use a real address you check) |
+
+Redeploy after adding these (any small change, or *Deploys → Trigger deploy
+→ Deploy site*) so the functions pick up the new environment variables.
+Without these three variables, the app works fine — the "Daily reminders"
+toggle just won't have any effect until they're set.
+
+> Want your own key pair instead of the one above? Generate one at
+> https://web-push-codelab.glitch.me and use those values instead.
+
+By default, reminders go out at **14:30 UTC** every day. To change it, edit
+the `export const config = { schedule: ... }` line at the bottom of
+`netlify/functions/send-daily-reminder.js` — that's the only place it's
+defined. Use https://crontab.guru to convert a local time to UTC.
+
 ## How it works
 
 - `public/index.html` — the app itself, including the login/signup gate
@@ -81,6 +117,17 @@ everyone's data.
   credential requires an existing PIN-authenticated session, so it can't be
   used to attach a passkey to someone else's account. Only the public key
   and a usage counter are stored — never anything biometric
+- `netlify/functions/push.js` — saves or removes a browser's push
+  subscription on the signed-in person's own account; requires a valid
+  session, same ownership rule as `profile.js`
+- `netlify/functions/vapid-public-key.js` — hands the browser the public
+  half of the VAPID key pair so it can subscribe to push; the private key
+  never leaves environment variables
+- `netlify/functions/send-daily-reminder.js` — a *scheduled* function (runs
+  automatically once a day, no request needed) that checks who hasn't
+  logged hours yet and sends them a push notification
+- `public/sw.js` — the service worker; receives push events and shows the
+  notification, even if the app isn't open
 - Data is stored in a Netlify Blobs store called `pace`, scoped to your site
 
 ## Security notes
