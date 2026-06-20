@@ -1,0 +1,10 @@
+{
+  "name": "pace-study-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^10.7.0",
+    "@simplewebauthn/server": "^13.3.1"
+  }
+}

@@ -1,0 +1,24 @@
+[build]
+  command = "npm install"
+  publish = "public"
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/api/auth"
+  to = "/.netlify/functions/auth"
+  status = 200
+
+[[redirects]]
+  from = "/api/profiles"
+  to = "/.netlify/functions/profiles"
+  status = 200
+
+[[redirects]]
+  from = "/api/profile"
+  to = "/.netlify/functions/profile"
+  status = 200
+
+[[redirects]]
+  from = "/api/webauthn"
+  to = "/.netlify/functions/webauthn"
+  status = 200
