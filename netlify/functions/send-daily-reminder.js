@@ -19,7 +19,7 @@ return { title: "Pace", body: "Set a study target in Pace to start tracking your
 return { title: "Pace", body: "Don't forget to log today's study hours, " + name + "." };
 }
 
-export const handler = async (event) =&gt; {
+export const handler = async (event) => {
 if (typeof connectLambda === "function") connectLambda(event);
 const store = getStore("pace");
 
