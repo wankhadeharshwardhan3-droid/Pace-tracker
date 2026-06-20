@@ -8,7 +8,7 @@ return new Date().toISOString().slice(0, 10);
 function buildMessage(name, record) {
 const today = todayStr();
 const entries = (record && record.entries) || [];
-const loggedToday = entries.some((e) =&gt; e.date === today && Number(e.hours) &gt; 0);
+const loggedToday = entries.some((e) => e.date === today && Number(e.hours) > 0);
 
 if (loggedToday) {
 return { title: "Pace", body: "Nice work, " + name + " - today's hours are already logged." };
