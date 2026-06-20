@@ -1,4 +1,4 @@
- # Pace — shared study tracker
+    # Pace — shared study tracker
 
 Everyone sign s in with a name and a 4-digit PIN. Each person's hours are
 private to them — only the person who created the account can view or edit
