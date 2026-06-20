@@ -1,6 +1,6 @@
-# Pace — shared study tracker
+ # Pace — shared study tracker
 
-Everyone signs in with a name and a 4-digit PIN. Each person's hours are
+Everyone sign s in with a name and a 4-digit PIN. Each person's hours are
 private to them — only the person who created the account can view or edit
 it. The "Everyone" tab shows summary stats (progress, balance) for all
 signed-up people, visible to anyone who is logged in, so progress is still
